@@ -8,42 +8,40 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import javafx.scene.control.ComboBox;
 import org.bson.Document;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 
 /**
  * Created by gregory on 1/26/18.
  */
 public class DatabaseManager {
-    private static String MONGODB_URL = "mongodb://admin:admin@ds133249.mlab.com:33249/nodetest";
-    private static String DATABASE_NAME = "nodetest";
-    private static String DEFAULT_COLLECTION_NAME = "test";
-
-    private static MongoDatabase db;
-    private static MongoCollection<Document> collection;
+    private static String DATABASE_URL = "https://dadproject-bf6ed.firebaseio.com";
+    private static String SERVICE_ACCOUNT = "dadproject-bf6ed-firebase-adminsdk-vanjj-a923d8ebf1.json";
+    private static String URGENCE_DATABASE_NAME = "urgence";
+    private static String DOCTORS_DATABASE_NAME = "doctors";
 
     private static DatabaseReference urgenceRef;
 
     public static void init() {
         // Establish connection
-        /*MongoClientURI connectionString = new MongoClientURI(MONGODB_URL);
-        MongoClient mongoClient = new MongoClient(connectionString);
-        db = mongoClient.getDatabase(DATABASE_NAME);
-        collection = db.getCollection(DEFAULT_COLLECTION_NAME);*/
-
         try {
-            FileInputStream serviceAccount =  new FileInputStream("dadproject-bf6ed-firebase-adminsdk-vanjj-a923d8ebf1.json");
+            FileInputStream serviceAccount =  new FileInputStream(SERVICE_ACCOUNT);
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                    .setDatabaseUrl("https://dadproject-bf6ed.firebaseio.com")
+                    .setDatabaseUrl(DATABASE_URL)
                     .build();
 
             FirebaseApp.initializeApp(options);
             urgenceRef = FirebaseDatabase
                     .getInstance()
-                    .getReference("urgence");
+                    .getReference(URGENCE_DATABASE_NAME);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -56,5 +54,27 @@ public class DatabaseManager {
 
         urgenceRef.push().setValueAsync(doc);
 
+    }
+
+    public static void loadDoctorNames(ComboBox<String> comboBox) {
+        DatabaseReference doctors = FirebaseDatabase
+                .getInstance()
+                .getReference(DOCTORS_DATABASE_NAME);
+        doctors.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Controller.doctors = (HashMap<String, String>) dataSnapshot.getValue();
+                ArrayList<String> doctorNames = new ArrayList<>();
+                doctorNames.addAll(Controller.doctors.keySet());
+                Collections.sort(doctorNames);
+                comboBox.getItems().addAll(doctorNames);
+                comboBox.setDisable(false);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }

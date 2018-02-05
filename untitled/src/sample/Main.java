@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import org.bson.Document;
 
@@ -28,13 +29,20 @@ public class Main extends Application {
         comboBox.getItems().addAll("Fracture","Appendicite","Autre");
 
         comboBox = (ComboBox<String>) root.lookup("#doctorCombobox");
-        comboBox.getItems().addAll("Dr. Katherine Cabrejo-Jones","Dr. Charles Desautels","Dr. Jacques Desnoyers");
+        //comboBox.getItems().addAll("Dr. Katherine Cabrejo-Jones","Dr. Charles Desautels","Dr. Jacques Desnoyers");
         // Setup Stage
         primaryStage.setTitle("Pilote");
         primaryStage.setScene(new Scene(root, 500, 400));
         primaryStage.show();
         // Setup mongodb
         DatabaseManager.init();
+        // Load doctors into comboBox
+        DatabaseManager.loadDoctorNames(comboBox);
+        // Complete combox setup
+        comboBox.valueProperty().addListener((ov, t, t1) -> {
+            Label specialtyLabel = (Label) root.lookup("#labelSpecialty");
+            specialtyLabel.setText(Controller.doctors.get(ov.getValue()));
+        });
 
 
 

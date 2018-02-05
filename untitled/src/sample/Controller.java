@@ -1,18 +1,26 @@
 package sample;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.Border;
 import javafx.scene.text.Text;
 import org.bson.Document;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class Controller {
+
 
     @FXML
     private TextField arrivalTime; // Heure d'arrivé
@@ -24,14 +32,16 @@ public class Controller {
     private ComboBox<String> operationCombobox; // Type d'opération
     @FXML
     private ComboBox<String> doctorCombobox; // Nom du médecin
+    @FXML
+    public Label labelSpecialty; // Spécialité du médecin
+
+    public static HashMap<String,String> doctors = new HashMap<>();
 
     public void handleSubmitButtonAction(ActionEvent actionEvent) {
-        System.out.println("Heure d'arrivé: " + arrivalTime.getText());
-        System.out.println("Temps pour commencer l'opération: " + operationField.getText());
-        System.out.println("Durée d'opération: " + operationField.getText());
-        System.out.println("Operation: " + operationCombobox.getSelectionModel().getSelectedItem());
-        System.out.println("Médecin: " + doctorCombobox.getSelectionModel().getSelectedItem());
-
+        // Validate combobox
+        if (!isValidSubmission()) {
+            return;
+        }
         Document doc = new Document("Arrival Time", arrivalTime.getText())
                 .append("Time to begin Operation", operationField.getText())
                 .append("Duration", DureeOperation.getText())
@@ -39,4 +49,41 @@ public class Controller {
                 .append("Doctor Name", doctorCombobox.getSelectionModel().getSelectedItem());
         DatabaseManager.insertNewUrgence(doc);
     }
+
+    private boolean isValidSubmission() {
+        // TODO set error css
+        boolean isValid = true;
+        String errorMessage = "";
+        // arrival time
+        if (arrivalTime.getText().isEmpty()) {
+            isValid = false;
+            errorMessage += "Le temps d'arrivé ne peut être nul.\n";
+        }
+        if (operationField.getText().isEmpty()) {
+            isValid = false;
+            errorMessage += "Le temps pour opérer ne peut être vide.\n";
+        }
+        if (DureeOperation.getText().isEmpty()) {
+            isValid = false;
+            errorMessage += "La durée de opération ne peut être vide.\n";
+        }
+        if (operationCombobox.getSelectionModel().isEmpty()) {
+            isValid = false;
+            errorMessage += "Veuillez choisir un type d'opération.\n";
+        }
+        if (doctorCombobox.getSelectionModel().isEmpty()) {
+            isValid = false;
+            errorMessage += "Veuillez choisir un médecin.\n";
+        }
+        if (!isValid) {
+            // Show error message
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Erreur");
+            alert.setHeaderText(null);
+            alert.setContentText(errorMessage);
+            alert.showAndWait();
+        }
+        return isValid;
+    }
+
 }
