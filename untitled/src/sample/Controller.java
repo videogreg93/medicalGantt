@@ -1,5 +1,8 @@
 package sample;
 
+import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXTimePicker;
 import javafx.event.ActionEvent;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
@@ -15,15 +18,17 @@ import javafx.scene.text.Text;
 import org.bson.Document;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
 public class Controller {
 
-
     @FXML
-    private TextField arrivalTime; // Heure d'arrivé
+    public JFXDatePicker datePicker;
+    @FXML
+    private JFXTimePicker arrivalTime; // Heure d'arrivé
     @FXML
     private TextField operationField; // Temps pour commencer l'opération
     @FXML
@@ -37,12 +42,28 @@ public class Controller {
 
     public static HashMap<String,String> doctors = new HashMap<>();
 
+
+    @FXML
+    public void initialize() {
+        // Setup DatePicker
+        datePicker.setValue(LocalDate.now());
+        // Setup comboboxes
+        operationCombobox.getItems().addAll("Fracture","Appendicite","Autre");
+        // Load doctor names
+        DatabaseManager.loadDoctorNames(doctorCombobox);
+        // Complete combox setup
+        doctorCombobox.valueProperty().addListener((ov, t, t1) -> {
+            labelSpecialty.setText(Controller.doctors.get(ov.getValue()));
+        });
+    }
+
+
     public void handleSubmitButtonAction(ActionEvent actionEvent) {
         // Validate combobox
         if (!isValidSubmission()) {
             return;
         }
-        Document doc = new Document("Arrival Time", arrivalTime.getText())
+        Document doc = new Document("Arrival Time", arrivalTime.getValue())
                 .append("Time to begin Operation", operationField.getText())
                 .append("Duration", DureeOperation.getText())
                 .append("Operation Type", operationCombobox.getSelectionModel().getSelectedItem())
@@ -55,7 +76,7 @@ public class Controller {
         boolean isValid = true;
         String errorMessage = "";
         // arrival time
-        if (arrivalTime.getText().isEmpty()) {
+        if (arrivalTime.getEditor().getText().isEmpty()) {
             isValid = false;
             errorMessage += "Le temps d'arrivé ne peut être nul.\n";
         }

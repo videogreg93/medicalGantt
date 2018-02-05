@@ -9,5 +9,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="org.mongodb:mongodb-driver:3.6.1" level="project" />
     <orderEntry type="library" name="com.google.firebase:firebase-admin:5.8.0" level="project" />
+    <orderEntry type="library" name="com.jfoenix:jfoenix:8.0.1" level="project" />
   </component>
 </module>

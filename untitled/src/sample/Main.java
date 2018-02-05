@@ -1,5 +1,7 @@
 package sample;
 
+import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.validation.RequiredFieldValidator;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
@@ -15,38 +17,22 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import org.bson.Document;
 
+import javax.swing.*;
 import java.util.Arrays;
 
 
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
+        // Setup mongodb
+        DatabaseManager.init();
+        //Setup View
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        // Setup comboboxes
-        ComboBox<String> comboBox = new ComboBox<>();
-        comboBox = (ComboBox<String>) root.lookup("#operationCombobox");
-        comboBox.getItems().addAll("Fracture","Appendicite","Autre");
-
-        comboBox = (ComboBox<String>) root.lookup("#doctorCombobox");
-        //comboBox.getItems().addAll("Dr. Katherine Cabrejo-Jones","Dr. Charles Desautels","Dr. Jacques Desnoyers");
         // Setup Stage
         primaryStage.setTitle("Pilote");
         primaryStage.setScene(new Scene(root, 500, 400));
         primaryStage.show();
-        // Setup mongodb
-        DatabaseManager.init();
-        // Load doctors into comboBox
-        DatabaseManager.loadDoctorNames(comboBox);
-        // Complete combox setup
-        comboBox.valueProperty().addListener((ov, t, t1) -> {
-            Label specialtyLabel = (Label) root.lookup("#labelSpecialty");
-            specialtyLabel.setText(Controller.doctors.get(ov.getValue()));
-        });
-
-
-
-
     }
 
 
