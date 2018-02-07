@@ -65,12 +65,15 @@ public class Controller {
             return;
         }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d, yyyy");
+        Document arrivalDate = new Document("day", datePicker.getValue().getDayOfMonth())
+                .append("month", datePicker.getValue().getMonthValue())
+                .append("year", datePicker.getValue().getYear());
         Document doc = new Document("Arrival Time", arrivalTime.getValue())
                 .append("Time to begin Operation", operationField.getText())
                 .append("Duration", DureeOperation.getText())
                 .append("Operation Type", operationCombobox.getSelectionModel().getSelectedItem())
                 .append("Doctor Name", doctorCombobox.getSelectionModel().getSelectedItem())
-                .append("Arrival Date", datePicker.getValue().format(formatter));
+                .append("Arrival Date", arrivalDate);
         DatabaseManager.insertNewUrgence(doc);
     }
 
