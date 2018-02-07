@@ -26,6 +26,8 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
                   UIColor(red: 1.000, green: 0.718, blue: 0.298, alpha: 1),
                   UIColor(red: 0.180, green: 0.671, blue: 0.796, alpha: 1)]
     
+    var days: [Date] = []; // HEader days of the week
+    
     //MARK: Constants
     let Hour_Row_Start: Int = 1;
     let Task_Row_Start: Int = 2;
@@ -33,6 +35,19 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // create necessary dates
+        for index in 0..<20 {
+            // Get Todays date
+            var date = Date();
+            let calendar = Calendar.current;
+            date = calendar.date(byAdding: .day, value: (index  / 6) - 1, to: date)!;
+            
+            
+            /*let formatter = DateFormatter()
+            formatter.timeStyle = .none
+            formatter.dateStyle = .medium*/
+            days.append(date)
+        }
         
         spreadsheetView.dataSource = self
         spreadsheetView.delegate = self
@@ -50,6 +65,7 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         spreadsheetView.flashScrollIndicators()
+        
         // Get tasks online
         ViewController.viewController = self;
         DatabaseManager.initialize();
@@ -96,7 +112,8 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
         }
         // Tasks
         let charts = DatabaseManager.urgenceArray.enumerated().map { (index, task) -> CellRange in
-            let start = task.arrivalTime.getRoundedTime();
+            //let start = task.arrivalTime.getRoundedTime();
+            let start = getUrgenceStartColumn(task);
             let end = Int(task.duration)
             return CellRange(from: (index + Task_Row_Start, start + 0), to: (index + Task_Row_Start, start + end - 1))
         }
@@ -109,7 +126,7 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
         case (0..<(15), 0): // Days
             let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: HeaderCell.self), for: indexPath) as! HeaderCell
             // Get Todays date
-            var date = Date();
+            /*var date = Date();
             let calendar = Calendar.current;
             date = calendar.date(byAdding: .day, value: (indexPath.column  / 6) - 1, to: date)!;
             
@@ -120,6 +137,11 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
             let day = formatter.string(from: date)
 
             //let text = ("Fév " + String(indexPath.column / 3))
+             */
+            let formatter = DateFormatter()
+            formatter.timeStyle = .none
+            formatter.dateStyle = .medium
+            let day = formatter.string(from: days[indexPath.column])
             let text = day.description
             cell.label.text = text;
             cell.gridlines.left = .default
@@ -134,7 +156,8 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
             return cell
         case (0..<(0 + 7 * 8), Task_Row_Start..<(Task_Row_Start + DatabaseManager.urgenceArray.count)): // Tasks
             let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: ChartBarCell.self), for: indexPath) as! ChartBarCell
-            let start = DatabaseManager.urgenceArray[indexPath.row - Task_Row_Start].arrivalTime.getRoundedTime()
+            //let start = DatabaseManager.urgenceArray[indexPath.row - Task_Row_Start].arrivalTime.getRoundedTime()
+            let start = getUrgenceStartColumn(DatabaseManager.urgenceArray[indexPath.row - Task_Row_Start]);
             if start == indexPath.column {
                 cell.label.text = DatabaseManager.urgenceArray[indexPath.row - Task_Row_Start].operationType
                 let colorIndex = indexPath.row % colors.count;
@@ -147,6 +170,16 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
         default:
             return nil
         }
+    }
+    
+    func getUrgenceStartColumn(_ urgence: Urgence) -> Int {
+        var start = urgence.arrivalTime.getRoundedTime();
+        // Décaler start selon la date
+        let calendar = NSCalendar.current;
+        let date1 = calendar.startOfDay(for: days[0]) // yesterday
+        let date2 = calendar.startOfDay(for: urgence.arrivalDate.toDate(calendar as NSCalendar));
+        let c = calendar.dateComponents([.day], from: date1, to: date2);
+        return start + (c.day! * 6);
     }
     
     /// Delegate

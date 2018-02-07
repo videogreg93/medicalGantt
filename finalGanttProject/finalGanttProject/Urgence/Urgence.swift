@@ -11,6 +11,7 @@ import Foundation
 class Urgence {
     var _id: String;
     var arrivalTime: Time;
+    var arrivalDate: CustomDate;
     var doctorName: String;
     var duration: Int;
     var operationType: String;
@@ -18,13 +19,14 @@ class Urgence {
     
     init(_ arrivalTime: Time, _ doctorName: String,
          _ duration: Int, _ operationType: String   ,
-         _ timeToBeginOperation: Int, _ id: String) {
+         _ timeToBeginOperation: Int, _ id: String, _ date: CustomDate) {
         self.arrivalTime = arrivalTime;
         self.doctorName = doctorName;
         self.duration = duration;
         self.operationType = operationType;
         self.timeToBeginOperation = timeToBeginOperation;
         self._id = id;
+        self.arrivalDate = date;
         
     }
     
@@ -33,14 +35,20 @@ class Urgence {
     public static func convertArrivalTimeFromOnline(_ time: NSDictionary) -> Time {
         let hour: Int = time.value(forKey: "hour") as! Int;
         let minute: Int = time.value(forKey: "minute") as! Int
-        
-        
         return Time(hour, minute);
-        
+    }
+    
+    public static func convertArrivalDateFromOnline(_ date: NSDictionary) -> CustomDate {
+        let day: Int = date.value(forKey: "day") as! Int;
+        let month: Int = date.value(forKey: "month") as! Int;
+        let year: Int = date.value(forKey: "year") as! Int;
+        return CustomDate(day,month,year);
     }
     
     public func toString() -> String {
         var string: String = "\nArrival Time: " + arrivalTime.description;
+        string += "\nRounded Time: " + String(arrivalTime.getRoundedTime());
+        string += "\nArrival Date: " + arrivalDate.description;
         string = "_id: " + _id + string;
         string += "\nDoctor: " + doctorName;
         string += "\nDuration: " + String(duration);
