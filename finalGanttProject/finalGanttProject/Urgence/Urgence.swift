@@ -9,25 +9,39 @@
 import Foundation
 
 class Urgence {
-    var arrivalTime: String;
+    var _id: String;
+    var arrivalTime: Time;
     var doctorName: String;
     var duration: Int;
     var operationType: String;
     var timeToBeginOperation: Int;
     
-    init(_ arrivalTime: String, _ doctorName: String,
+    init(_ arrivalTime: Time, _ doctorName: String,
          _ duration: Int, _ operationType: String   ,
-         _ timeToBeginOperation: Int) {
+         _ timeToBeginOperation: Int, _ id: String) {
         self.arrivalTime = arrivalTime;
         self.doctorName = doctorName;
         self.duration = duration;
         self.operationType = operationType;
         self.timeToBeginOperation = timeToBeginOperation;
+        self._id = id;
+        
+    }
+    
+    //MARK: Static functions
+    
+    public static func convertArrivalTimeFromOnline(_ time: NSDictionary) -> Time {
+        let hour: Int = time.value(forKey: "hour") as! Int;
+        let minute: Int = time.value(forKey: "minute") as! Int
+        
+        
+        return Time(hour, minute);
         
     }
     
     public func toString() -> String {
-        var string: String = "Arrival Time: " + arrivalTime;
+        var string: String = "\nArrival Time: " + arrivalTime.description;
+        string = "_id: " + _id + string;
         string += "\nDoctor: " + doctorName;
         string += "\nDuration: " + String(duration);
         string += "\nOperation Type: " + operationType;

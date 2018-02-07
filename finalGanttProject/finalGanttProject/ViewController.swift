@@ -96,7 +96,7 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
         }
         // Tasks
         let charts = DatabaseManager.urgenceArray.enumerated().map { (index, task) -> CellRange in
-            let start = Int(task.arrivalTime)!
+            let start = task.arrivalTime.getRoundedTime();
             let end = Int(task.duration)
             return CellRange(from: (index + Task_Row_Start, start + 0), to: (index + Task_Row_Start, start + end - 1))
         }
@@ -111,7 +111,9 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
             // Get Todays date
             var date = Date();
             let calendar = Calendar.current;
-            date = calendar.date(byAdding: .day, value: indexPath.column / 6, to: date)!;
+            date = calendar.date(byAdding: .day, value: (indexPath.column  / 6) - 1, to: date)!;
+            
+            
             let formatter = DateFormatter()
             formatter.timeStyle = .none
             formatter.dateStyle = .medium
@@ -132,7 +134,7 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
             return cell
         case (0..<(0 + 7 * 8), Task_Row_Start..<(Task_Row_Start + DatabaseManager.urgenceArray.count)): // Tasks
             let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: ChartBarCell.self), for: indexPath) as! ChartBarCell
-            let start = Int(DatabaseManager.urgenceArray[indexPath.row - Task_Row_Start].arrivalTime)!
+            let start = DatabaseManager.urgenceArray[indexPath.row - Task_Row_Start].arrivalTime.getRoundedTime()
             if start == indexPath.column {
                 cell.label.text = DatabaseManager.urgenceArray[indexPath.row - Task_Row_Start].operationType
                 let colorIndex = indexPath.row % colors.count;

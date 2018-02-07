@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		3E5FBEFEADA361F9F303B0BC /* Pods_finalGanttProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E23959EADD2844FB1B88AC00 /* Pods_finalGanttProject.framework */; };
+		59285BCC202B803A00CF2166 /* finalGanttProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59285BCB202B803A00CF2166 /* finalGanttProjectTests.swift */; };
+		59285BD4202B80A200CF2166 /* databaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59285BD3202B80A200CF2166 /* databaseTests.swift */; };
+		59285BD6202B877500CF2166 /* TimeAndDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59285BD5202B877500CF2166 /* TimeAndDate.swift */; };
+		59285BD7202B8C3100CF2166 /* TimeAndDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59285BD5202B877500CF2166 /* TimeAndDate.swift */; };
 		59C1194B20251672002A8D6D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C1194A20251672002A8D6D /* AppDelegate.swift */; };
 		59C1194D20251672002A8D6D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C1194C20251672002A8D6D /* ViewController.swift */; };
 		59C1195020251672002A8D6D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59C1194E20251672002A8D6D /* Main.storyboard */; };
@@ -19,9 +23,24 @@
 		59C11965202524BC002A8D6D /* Urgence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C11964202524BC002A8D6D /* Urgence.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		59285BCE202B803A00CF2166 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 59C1193F20251672002A8D6D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 59C1194620251672002A8D6D;
+			remoteInfo = finalGanttProject;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		1499AA90F422E0E0499D5826 /* Pods-finalGanttProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-finalGanttProject.release.xcconfig"; path = "Pods/Target Support Files/Pods-finalGanttProject/Pods-finalGanttProject.release.xcconfig"; sourceTree = "<group>"; };
 		2B5DB047B66091F73E7BD79C /* Pods-finalGanttProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-finalGanttProject.debug.xcconfig"; path = "Pods/Target Support Files/Pods-finalGanttProject/Pods-finalGanttProject.debug.xcconfig"; sourceTree = "<group>"; };
+		59285BC9202B803900CF2166 /* finalGanttProjectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = finalGanttProjectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		59285BCB202B803A00CF2166 /* finalGanttProjectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = finalGanttProjectTests.swift; sourceTree = "<group>"; };
+		59285BCD202B803A00CF2166 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		59285BD3202B80A200CF2166 /* databaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = databaseTests.swift; sourceTree = "<group>"; };
+		59285BD5202B877500CF2166 /* TimeAndDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeAndDate.swift; sourceTree = "<group>"; };
 		59C1194720251672002A8D6D /* finalGanttProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = finalGanttProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		59C1194A20251672002A8D6D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		59C1194C20251672002A8D6D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -37,6 +56,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		59285BC6202B803900CF2166 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		59C1194420251672002A8D6D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -48,10 +74,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		59285BCA202B803A00CF2166 /* finalGanttProjectTests */ = {
+			isa = PBXGroup;
+			children = (
+				59285BD3202B80A200CF2166 /* databaseTests.swift */,
+				59285BCB202B803A00CF2166 /* finalGanttProjectTests.swift */,
+				59285BCD202B803A00CF2166 /* Info.plist */,
+			);
+			path = finalGanttProjectTests;
+			sourceTree = "<group>";
+		};
 		59C1193E20251672002A8D6D = {
 			isa = PBXGroup;
 			children = (
 				59C1194920251672002A8D6D /* finalGanttProject */,
+				59285BCA202B803A00CF2166 /* finalGanttProjectTests */,
 				59C1194820251672002A8D6D /* Products */,
 				FB10B2045E7E3B3A009513FB /* Pods */,
 				861A4BD16F95FC69A37C6697 /* Frameworks */,
@@ -62,6 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				59C1194720251672002A8D6D /* finalGanttProject.app */,
+				59285BC9202B803900CF2166 /* finalGanttProjectTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				59C11964202524BC002A8D6D /* Urgence.swift */,
+				59285BD5202B877500CF2166 /* TimeAndDate.swift */,
 			);
 			path = Urgence;
 			sourceTree = "<group>";
@@ -119,6 +158,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		59285BC8202B803900CF2166 /* finalGanttProjectTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 59285BD2202B803A00CF2166 /* Build configuration list for PBXNativeTarget "finalGanttProjectTests" */;
+			buildPhases = (
+				59285BC5202B803900CF2166 /* Sources */,
+				59285BC6202B803900CF2166 /* Frameworks */,
+				59285BC7202B803900CF2166 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				59285BCF202B803A00CF2166 /* PBXTargetDependency */,
+			);
+			name = finalGanttProjectTests;
+			productName = finalGanttProjectTests;
+			productReference = 59285BC9202B803900CF2166 /* finalGanttProjectTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		59C1194620251672002A8D6D /* finalGanttProject */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 59C1195920251672002A8D6D /* Build configuration list for PBXNativeTarget "finalGanttProject" */;
@@ -149,6 +206,11 @@
 				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = "Gregory Fournier";
 				TargetAttributes = {
+					59285BC8202B803900CF2166 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 59C1194620251672002A8D6D;
+					};
 					59C1194620251672002A8D6D = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
@@ -169,11 +231,19 @@
 			projectRoot = "";
 			targets = (
 				59C1194620251672002A8D6D /* finalGanttProject */,
+				59285BC8202B803900CF2166 /* finalGanttProjectTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		59285BC7202B803900CF2166 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		59C1194520251672002A8D6D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -248,12 +318,23 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		59285BC5202B803900CF2166 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				59285BD4202B80A200CF2166 /* databaseTests.swift in Sources */,
+				59285BCC202B803A00CF2166 /* finalGanttProjectTests.swift in Sources */,
+				59285BD7202B8C3100CF2166 /* TimeAndDate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		59C1194320251672002A8D6D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				59C1196220251DC6002A8D6D /* databaseManager.swift in Sources */,
 				59C1194D20251672002A8D6D /* ViewController.swift in Sources */,
+				59285BD6202B877500CF2166 /* TimeAndDate.swift in Sources */,
 				59C11965202524BC002A8D6D /* Urgence.swift in Sources */,
 				59C1195F20251802002A8D6D /* Cells.swift in Sources */,
 				59C1194B20251672002A8D6D /* AppDelegate.swift in Sources */,
@@ -261,6 +342,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		59285BCF202B803A00CF2166 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 59C1194620251672002A8D6D /* finalGanttProject */;
+			targetProxy = 59285BCE202B803A00CF2166 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		59C1194E20251672002A8D6D /* Main.storyboard */ = {
@@ -282,6 +371,38 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		59285BD0202B803A00CF2166 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2U338TNK82;
+				INFOPLIST_FILE = finalGanttProjectTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.gregoryfournier.finalGanttProjectTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/finalGanttProject.app/finalGanttProject";
+			};
+			name = Debug;
+		};
+		59285BD1202B803A00CF2166 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2U338TNK82;
+				INFOPLIST_FILE = finalGanttProjectTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.gregoryfournier.finalGanttProjectTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/finalGanttProject.app/finalGanttProject";
+			};
+			name = Release;
+		};
 		59C1195720251672002A8D6D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -424,6 +545,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		59285BD2202B803A00CF2166 /* Build configuration list for PBXNativeTarget "finalGanttProjectTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				59285BD0202B803A00CF2166 /* Debug */,
+				59285BD1202B803A00CF2166 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		59C1194220251672002A8D6D /* Build configuration list for PBXProject "finalGanttProject" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
