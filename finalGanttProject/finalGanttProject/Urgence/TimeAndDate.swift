@@ -29,10 +29,9 @@ class Time: CustomStringConvertible {
             temp += 1;
         }
         
-        if hour % 4 >= 2 {
+        if temp % 4 >= 2 {
             return (temp/4)+1
         }
-        
         return temp/4;
     }
     
@@ -45,6 +44,20 @@ class CustomDate: CustomStringConvertible {
     var day: Int = 0;
     var month: Int = 1; // 1 indexed
     var year: Int = 0;
+    
+    init(_ day: Int, _ month: Int, _ year: Int) {
+        self.day = day;
+        self.month = month;
+        self.year = year;
+    }
+    
+    public func toDate(_ calendar: NSCalendar) -> Date {
+        var c = NSDateComponents();
+        c.day = day;
+        c.month = month;
+        c.year = year;
+        return calendar.date(from: c as DateComponents)!;
+    }
     
     public var description: String {
         return (String(day) + "/" + String(month) + "/" + String(year));
