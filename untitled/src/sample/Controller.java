@@ -19,6 +19,7 @@ import org.bson.Document;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -63,11 +64,13 @@ public class Controller {
         if (!isValidSubmission()) {
             return;
         }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d, yyyy");
         Document doc = new Document("Arrival Time", arrivalTime.getValue())
                 .append("Time to begin Operation", operationField.getText())
                 .append("Duration", DureeOperation.getText())
                 .append("Operation Type", operationCombobox.getSelectionModel().getSelectedItem())
-                .append("Doctor Name", doctorCombobox.getSelectionModel().getSelectedItem());
+                .append("Doctor Name", doctorCombobox.getSelectionModel().getSelectedItem())
+                .append("Arrival Date", datePicker.getValue().format(formatter));
         DatabaseManager.insertNewUrgence(doc);
     }
 
