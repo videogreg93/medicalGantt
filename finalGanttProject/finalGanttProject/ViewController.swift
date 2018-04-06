@@ -36,7 +36,7 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
     override func viewDidLoad() {
         super.viewDidLoad()
         // create necessary dates
-        for index in 0..<20 {
+        for index in 0..<200 {
             // Get Todays date
             var date = Date();
             let calendar = Calendar.current;
@@ -73,7 +73,7 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
     
     // MARK: DataSource
     func numberOfColumns(in spreadsheetView: SpreadsheetView) -> Int {
-        return 3 + 7 * 8
+        return 6*20;
     }
     
     func numberOfRows(in spreadsheetView: SpreadsheetView) -> Int {
@@ -107,14 +107,14 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
     func mergedCells(in spreadsheetView: SpreadsheetView) -> [CellRange] {
         // Days
         var days:[CellRange] = []
-        for i in 0...5 {
+        for i in 0...10 {
             days.append(CellRange(from: (0,i*6), to: (0, (i*6) + 5)))
         }
         // Tasks
         let charts = DatabaseManager.urgenceArray.enumerated().map { (index, task) -> CellRange in
             //let start = task.arrivalTime.getRoundedTime();
             let start = getUrgenceStartColumn(task);
-            let end = Int(task.duration)
+            let end: Int = Int((Int(task.timeToBeginOperation) - Int(task.duration)) / 4)
             return CellRange(from: (index + Task_Row_Start, start + 0), to: (index + Task_Row_Start, start + end - 1))
         }
         return  days  + charts
@@ -123,7 +123,7 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
     // MARK: What to display in each cell
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, cellForItemAt indexPath: IndexPath) -> Cell? {
         switch (indexPath.column, indexPath.row) { // IMPORTANT (column, row)
-        case (0..<(15), 0): // Days
+        case (0..<(6*6), 0): // Days
             let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: HeaderCell.self), for: indexPath) as! HeaderCell
             // Get Todays date
             /*var date = Date();
