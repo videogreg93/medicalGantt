@@ -3,6 +3,7 @@ package sample;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
+import com.sun.tools.javac.util.List;
 import javafx.event.ActionEvent;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
@@ -16,18 +17,33 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.Border;
 import javafx.scene.text.Text;
 import org.bson.Document;
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
-import java.io.IOException;
+import javax.crypto.Cipher;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.security.KeyFactory;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static sample.EncryptionHandler.decrypt;
+import static sample.EncryptionHandler.encrypt;
 
 public class Controller {
 
     @FXML
     public JFXDatePicker datePicker;
+    public TextField numDossier; // numéro de dossier du patient
     @FXML
     private JFXTimePicker arrivalTime; // Heure d'arrivé
     @FXML
@@ -44,6 +60,7 @@ public class Controller {
     public static HashMap<String,String> doctors = new HashMap<>();
 
 
+
     @FXML
     public void initialize() {
         // Setup DatePicker
@@ -56,6 +73,18 @@ public class Controller {
         doctorCombobox.valueProperty().addListener((ov, t, t1) -> {
             labelSpecialty.setText(Controller.doctors.get(ov.getValue()));
         });
+
+        // TESTING ENCRYPTION
+        try {
+            byte[] encryptedText = encrypt("12345");
+            System.out.println(Arrays.toString(encryptedText));
+            System.out.println(decrypt(encryptedText));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
 
 
@@ -73,26 +102,69 @@ public class Controller {
                 .append("Duration", DureeOperation.getText())
                 .append("Operation Type", operationCombobox.getSelectionModel().getSelectedItem())
                 .append("Doctor Name", doctorCombobox.getSelectionModel().getSelectedItem())
-                .append("Arrival Date", arrivalDate);
+                .append("Arrival Date", arrivalDate)
+                .append("Dossier", Arrays.toString(encrypt(numDossier.getText()))); // TODO this will be encrypted
         DatabaseManager.insertNewUrgence(doc);
+
+        showValidationMessage();
+        clearFormValues();
     }
+
+    private void clearFormValues() {
+        numDossier.clear();
+        operationField.clear();
+        DureeOperation.clear();
+        operationCombobox.getSelectionModel().clearSelection();
+        doctorCombobox.getSelectionModel().clearSelection();
+        //labelSpecialty;
+    }
+
+
+    private void showValidationMessage() {
+        // Show Validation Message
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Envoyé");
+        alert.setHeaderText(null);
+        alert.setContentText("Urgence bien envoyée!");
+        alert.showAndWait();
+    }
+
+
 
     private boolean isValidSubmission() {
         // TODO set error css
         boolean isValid = true;
         String errorMessage = "";
+        // Patient Dossier number
+        Pattern p = Pattern.compile("[0-9]+");
+        Matcher m = p.matcher(numDossier.getText());
+        if (!m.find()) {
+            isValid = false;
+            errorMessage += "Le numéro de dossier doit être un nombre\n";
+        }
+        // Date picker
+        p = Pattern.compile("\\d{4}-\\d{2}-\\d{2}");
+        m = p.matcher(datePicker.getValue().toString());
+        if (!m.find()) {
+            isValid = false;
+            errorMessage += "Veuillez rentrez une date valide\n";
+        }
         // arrival time
         if (arrivalTime.getEditor().getText().isEmpty()) {
             isValid = false;
             errorMessage += "Le temps d'arrivé ne peut être nul.\n";
         }
-        if (operationField.getText().isEmpty()) {
+        // Temps de latence
+        p = Pattern.compile("\\d{1,3}h?");
+        m = p.matcher(operationField.getText());
+        if (!m.find()) {
             isValid = false;
-            errorMessage += "Le temps pour opérer ne peut être vide.\n";
+            errorMessage += "Le temps de latence n'est pas valide\n";
         }
-        if (DureeOperation.getText().isEmpty()) {
+        m = p.matcher("\\d{1,3}h?");
+        if (!m.find()) {
             isValid = false;
-            errorMessage += "La durée de opération ne peut être vide.\n";
+            errorMessage += "La durée de opération n'es pas valide\n";
         }
         if (operationCombobox.getSelectionModel().isEmpty()) {
             isValid = false;
@@ -112,5 +184,9 @@ public class Controller {
         }
         return isValid;
     }
+
+
+
+
 
 }
