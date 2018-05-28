@@ -26,8 +26,9 @@ class DatabaseManager {
             let operationType: String = entry!["Operation Type"] as! String;
             let timeToBeginOperation: Int = (entry!["Time to begin Operation"] as! NSString).integerValue;
             let date: CustomDate = Urgence.convertArrivalDateFromOnline(entry!["Arrival Date"] as! NSDictionary);
+            let dossier = entry!["Dossier"];
             urgenceArray.append(Urgence(arrivalTime,doctorName,duration,
-                                        operationType,timeToBeginOperation, id, date));
+                                        operationType,timeToBeginOperation, id, date, dossier));
             
            
         

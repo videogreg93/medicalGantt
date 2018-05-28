@@ -16,10 +16,11 @@ class Urgence {
     var duration: Int;
     var operationType: String;
     var timeToBeginOperation: Int;
+    var dossier: Any;
     
     init(_ arrivalTime: Time, _ doctorName: String,
          _ duration: Int, _ operationType: String   ,
-         _ timeToBeginOperation: Int, _ id: String, _ date: CustomDate) {
+         _ timeToBeginOperation: Int, _ id: String, _ date: CustomDate, _ dos: Any!) {
         self.arrivalTime = arrivalTime;
         self.doctorName = doctorName;
         self.duration = duration;
@@ -27,6 +28,12 @@ class Urgence {
         self.timeToBeginOperation = timeToBeginOperation;
         self._id = id;
         self.arrivalDate = date;
+        do {
+            self.dossier = try Encryption.decrypt(dos as! String);
+        } catch {
+            self.dossier = ""
+            print(error)
+        }
         
     }
     

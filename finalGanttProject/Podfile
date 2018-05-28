@@ -9,7 +9,7 @@ target 'finalGanttProject' do
 	pod ‘SpreadsheetView’
 	pod 'Firebase/Core'
 	pod 'Firebase/Database'
-	
+	pod 'SwiftyRSA'
 	
 
 end

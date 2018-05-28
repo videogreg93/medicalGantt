@@ -73,18 +73,6 @@ public class Controller {
         doctorCombobox.valueProperty().addListener((ov, t, t1) -> {
             labelSpecialty.setText(Controller.doctors.get(ov.getValue()));
         });
-
-        // TESTING ENCRYPTION
-        try {
-            byte[] encryptedText = encrypt("12345");
-            System.out.println(Arrays.toString(encryptedText));
-            System.out.println(decrypt(encryptedText));
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
     }
 
 
@@ -103,9 +91,8 @@ public class Controller {
                 .append("Operation Type", operationCombobox.getSelectionModel().getSelectedItem())
                 .append("Doctor Name", doctorCombobox.getSelectionModel().getSelectedItem())
                 .append("Arrival Date", arrivalDate)
-                .append("Dossier", Arrays.toString(encrypt(numDossier.getText()))); // TODO this will be encrypted
+                .append("Dossier", (encrypt(numDossier.getText()))); // TODO this will be encrypted
         DatabaseManager.insertNewUrgence(doc);
-
         showValidationMessage();
         clearFormValues();
     }

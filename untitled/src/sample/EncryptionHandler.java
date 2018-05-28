@@ -1,6 +1,7 @@
 package sample;
 
 import javax.crypto.Cipher;
+import javax.xml.bind.DatatypeConverter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.KeyFactory;
@@ -40,7 +41,7 @@ public class EncryptionHandler {
         publicKey = kf.generatePublic(spec);
     }
 
-    public static byte[] encrypt(String text) {
+    public static String encrypt(String text) {
         try {
             if (publicKey == null)
                 fetchPublicKey();
@@ -57,7 +58,9 @@ public class EncryptionHandler {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return cipherText;
+        String returnValue = DatatypeConverter.printBase64Binary(cipherText);
+        System.out.println("Encrypted = " + returnValue);
+        return returnValue ;
     }
 
     public static String decrypt(byte[] text) {
@@ -82,4 +85,5 @@ public class EncryptionHandler {
 
         return new String(dectyptedText);
     }
+
 }
