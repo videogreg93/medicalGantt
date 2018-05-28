@@ -16,7 +16,7 @@ class Urgence {
     var duration: Int;
     var operationType: String;
     var timeToBeginOperation: Int;
-    var dossier: Any;
+    var dossier: Int;
     
     init(_ arrivalTime: Time, _ doctorName: String,
          _ duration: Int, _ operationType: String   ,
@@ -29,9 +29,9 @@ class Urgence {
         self._id = id;
         self.arrivalDate = date;
         do {
-            self.dossier = try Encryption.decrypt(dos as! String);
+            self.dossier = (try Int(Encryption.decrypt(dos as! String)))!;
         } catch {
-            self.dossier = ""
+            self.dossier = -1;
             print(error)
         }
         
@@ -53,14 +53,15 @@ class Urgence {
     }
     
     public func toString() -> String {
-        var string: String = "\nArrival Time: " + arrivalTime.description;
-        string += "\nRounded Time: " + String(arrivalTime.getRoundedTime());
-        string += "\nArrival Date: " + arrivalDate.description;
-        string = "_id: " + _id + string;
-        string += "\nDoctor: " + doctorName;
-        string += "\nDuration: " + String(duration);
-        string += "\nOperation Type: " + operationType;
-        string += "\nTime to begin operation: " + String(timeToBeginOperation) + "\n";
+        var string: String = "\nHeure d'arrivée: " + arrivalTime.description;
+        string += "\n# de dossier: " + String(dossier);
+        //string += "\nRounded Time: " + String(arrivalTime.getRoundedTime());
+        string += "\nDate d'arrivée: " + arrivalDate.description;
+        //string = "_id: " + _id + string;
+        string += "\nMédecin: " + doctorName;
+        string += "\nOpération: " + operationType;
+        string += "\nTemps de latence: " + String(timeToBeginOperation);
+        string += "\nDurée prévue de l'opération: " + String(duration) + "\n";
         return string;
     }
     

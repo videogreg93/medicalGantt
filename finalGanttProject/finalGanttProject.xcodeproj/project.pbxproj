@@ -25,6 +25,8 @@
 		59C1195F20251802002A8D6D /* Cells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C1195E20251802002A8D6D /* Cells.swift */; };
 		59C1196220251DC6002A8D6D /* databaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C1196120251DC6002A8D6D /* databaseManager.swift */; };
 		59C11965202524BC002A8D6D /* Urgence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59C11964202524BC002A8D6D /* Urgence.swift */; };
+		59FE247720BC490F00B14862 /* PopupHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FE247620BC490F00B14862 /* PopupHandler.swift */; };
+		59FE247820BC490F00B14862 /* PopupHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FE247620BC490F00B14862 /* PopupHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +60,7 @@
 		59C1195E20251802002A8D6D /* Cells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cells.swift; sourceTree = "<group>"; };
 		59C1196120251DC6002A8D6D /* databaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = databaseManager.swift; sourceTree = "<group>"; };
 		59C11964202524BC002A8D6D /* Urgence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Urgence.swift; sourceTree = "<group>"; };
+		59FE247620BC490F00B14862 /* PopupHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupHandler.swift; sourceTree = "<group>"; };
 		E23959EADD2844FB1B88AC00 /* Pods_finalGanttProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_finalGanttProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -94,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				59AEA54E20B49F7B00D9748A /* Encryption.swift */,
+				59FE247620BC490F00B14862 /* PopupHandler.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -316,7 +320,9 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-finalGanttProject/Pods-finalGanttProject-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/DynamicBlurView/DynamicBlurView.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/PopupDialog/PopupDialog.framework",
 				"${BUILT_PRODUCTS_DIR}/SpreadsheetView/SpreadsheetView.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyRSA/SwiftyRSA.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
@@ -324,7 +330,9 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DynamicBlurView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PopupDialog.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SpreadsheetView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyRSA.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
@@ -342,6 +350,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59FE247820BC490F00B14862 /* PopupHandler.swift in Sources */,
 				59285BD4202B80A200CF2166 /* databaseTests.swift in Sources */,
 				59285BCC202B803A00CF2166 /* finalGanttProjectTests.swift in Sources */,
 				59AEA55020B49F7B00D9748A /* Encryption.swift in Sources */,
@@ -360,6 +369,7 @@
 				59C1195F20251802002A8D6D /* Cells.swift in Sources */,
 				59C1194B20251672002A8D6D /* AppDelegate.swift in Sources */,
 				59AEA54F20B49F7B00D9748A /* Encryption.swift in Sources */,
+				59FE247720BC490F00B14862 /* PopupHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

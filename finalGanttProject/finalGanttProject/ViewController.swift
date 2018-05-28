@@ -187,6 +187,8 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
         print("Selected: (row: \(indexPath.row), column: \(indexPath.column))")
         //print((spreadsheetView.cellForItem(at: indexPath) as! ChartBarCell).label.text ?? "")
         let urgence: Urgence = DatabaseManager.urgenceArray[indexPath.row - Task_Row_Start];
+        // Show a popup with data
+        PopupHandler.Popup("Patient #" + String(urgence.dossier), urgence.toString(), self)
         print(urgence.toString());
     }
 }
