@@ -26,28 +26,20 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
                   UIColor(red: 1.000, green: 0.718, blue: 0.298, alpha: 1),
                   UIColor(red: 0.180, green: 0.671, blue: 0.796, alpha: 1)]
     
-    var days: [Date] = []; // HEader days of the week
+    var days: [Date] = []; // Header days of the week
     
     //MARK: Constants
     let Hour_Row_Start: Int = 1;
     let Task_Row_Start: Int = 2;
+    var DateWidth: Int = 24; // number of cells that each date takes
+    var HourZoom: Int = 1; // Granuality (sp??) of hours (4 = 0h,4h,8h,12h...)
+    var DaysToShow: Int = 10;
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // create necessary dates
-        for index in 0..<200 {
-            // Get Todays date
-            var date = Date();
-            let calendar = Calendar.current;
-            date = calendar.date(byAdding: .day, value: (index  / 6) - 1, to: date)!;
-            
-            
-            /*let formatter = DateFormatter()
-            formatter.timeStyle = .none
-            formatter.dateStyle = .medium*/
-            days.append(date)
-        }
+        calculateDates();
         
         spreadsheetView.dataSource = self
         spreadsheetView.delegate = self
@@ -73,7 +65,7 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
     
     // MARK: DataSource
     func numberOfColumns(in spreadsheetView: SpreadsheetView) -> Int {
-        return 6*20;
+        return DateWidth*DaysToShow;
     }
     
     func numberOfRows(in spreadsheetView: SpreadsheetView) -> Int {
@@ -107,14 +99,14 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
     func mergedCells(in spreadsheetView: SpreadsheetView) -> [CellRange] {
         // Days
         var days:[CellRange] = []
-        for i in 0...10 {
-            days.append(CellRange(from: (0,i*6), to: (0, (i*6) + 5)))
+        for i in 0...DaysToShow-1 {
+            days.append(CellRange(from: (0,i*DateWidth), to: (0, (i*DateWidth) + (DateWidth-1))))
         }
         // Tasks
         let charts = DatabaseManager.urgenceArray.enumerated().map { (index, task) -> CellRange in
             //let start = task.arrivalTime.getRoundedTime();
             let start = getUrgenceStartColumn(task);
-            let end: Int = Int((Int(task.timeToBeginOperation) - Int(task.duration)) / 4)
+            let end: Int = Int((Int(task.timeToBeginOperation) - Int(task.duration)) / HourZoom)
             return CellRange(from: (index + Task_Row_Start, start + 0), to: (index + Task_Row_Start, start + end - 1))
         }
         return  days  + charts
@@ -123,21 +115,9 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
     // MARK: What to display in each cell
     func spreadsheetView(_ spreadsheetView: SpreadsheetView, cellForItemAt indexPath: IndexPath) -> Cell? {
         switch (indexPath.column, indexPath.row) { // IMPORTANT (column, row)
-        case (0..<(6*6), 0): // Days
+        case (0..<(DateWidth*DaysToShow), 0): // Days
             let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: HeaderCell.self), for: indexPath) as! HeaderCell
             // Get Todays date
-            /*var date = Date();
-            let calendar = Calendar.current;
-            date = calendar.date(byAdding: .day, value: (indexPath.column  / 6) - 1, to: date)!;
-            
-            
-            let formatter = DateFormatter()
-            formatter.timeStyle = .none
-            formatter.dateStyle = .medium
-            let day = formatter.string(from: date)
-
-            //let text = ("Fév " + String(indexPath.column / 3))
-             */
             let formatter = DateFormatter()
             formatter.timeStyle = .none
             formatter.dateStyle = .medium
@@ -149,7 +129,7 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
             return cell
         case (0..<(7 * 8), 1): // Hours
             let cell = spreadsheetView.dequeueReusableCell(withReuseIdentifier: String(describing: HeaderCell.self), for: indexPath) as! HeaderCell
-            let text = ((indexPath.column - 0) % 6) * 4
+            let text = ((indexPath.column - 0) % DateWidth) * HourZoom
             cell.label.text = String(text) + "h"
             cell.gridlines.left = .default
             cell.gridlines.right = .default
@@ -172,14 +152,54 @@ class ViewController: UIViewController, SpreadsheetViewDataSource, SpreadsheetVi
         }
     }
     
+    //MARK: Button functions
+    @IBAction func onZoomIn(_ sender: UIButton) {
+        if (DateWidth >= 24) {
+           return;
+        }
+        DateWidth = DateWidth*2;
+        HourZoom = HourZoom/2;
+        
+        // Recalculate dates
+        calculateDates();
+        
+        // Tell spreadsheet to reload the data on screen
+        ViewController.viewController?.spreadsheetView.reloadData();
+    }
+    
+    @IBAction func onZoomOut(_ sender: UIButton) {
+        if (DateWidth <= 6) {
+            return;
+        }
+        DateWidth = DateWidth/2;
+        HourZoom = HourZoom*2;
+        
+        // Recalculate dates
+        calculateDates();
+        
+        // Tell spreadsheet to reload the data on screen
+        ViewController.viewController?.spreadsheetView.reloadData();
+    }
+    
     func getUrgenceStartColumn(_ urgence: Urgence) -> Int {
-        var start = urgence.arrivalTime.getRoundedTime();
+        //var start = urgence.arrivalTime.getRoundedTime();
+        var start: Int = urgence.arrivalTime.hour / HourZoom;
         // Décaler start selon la date
         let calendar = NSCalendar.current;
         let date1 = calendar.startOfDay(for: days[0]) // yesterday
         let date2 = calendar.startOfDay(for: urgence.arrivalDate.toDate(calendar as NSCalendar));
         let c = calendar.dateComponents([.day], from: date1, to: date2);
-        return start + (c.day! * 6);
+        return start + (c.day! * DateWidth);
+    }
+    
+    func calculateDates() {
+        days = [];
+        for index in 0..<((DaysToShow+1)*DateWidth) {
+            var date = Date();
+            let calendar = Calendar.current;
+            date = calendar.date(byAdding: .day, value: (index  / DateWidth) - 1, to: date)!;
+            days.append(date)
+        }
     }
     
     /// Delegate
