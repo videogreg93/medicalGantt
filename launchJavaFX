@@ -1,0 +1,8 @@
+#!/bin/bash
+parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+cd "$parent_path"
+#Copy common directory
+cp -R common ./untitled/out/artifacts/common/
+#launch application
+cd ./untitled/out/artifacts/mainBuild/;
+java -jar untitled.jar;

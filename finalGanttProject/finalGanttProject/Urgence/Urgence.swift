@@ -59,8 +59,8 @@ class Urgence {
         string += "\nDate d'arrivée: " + arrivalDate.description;
         //string = "_id: " + _id + string;
         string += "\nMédecin: " + doctorName;
-        string += "\nOpération: " + operationType;
-        string += "\nTemps de latence: " + String(timeToBeginOperation);
+        string += "\nChirurgie Planifiée: " + operationType;
+        string += "\nTemps de latence acceptable: " + String(timeToBeginOperation);
         string += "\nDurée prévue de l'opération: " + String(duration) + "\n";
         return string;
     }

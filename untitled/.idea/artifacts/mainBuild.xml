@@ -1,0 +1,27 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="mainBuild">
+    <output-path>$PROJECT_DIR$/out/artifacts/mainBuild</output-path>
+    <properties id="javafx-properties">
+      <options>
+        <option name="appClass" value="sample.Main" />
+        <option name="description" value="" />
+        <option name="htmlPlaceholderId" value="" />
+        <option name="title" value="Urgences" />
+        <option name="vendor" value="Gregory Fournier" />
+        <option name="version" value="0.1" />
+      </options>
+    </properties>
+    <root id="root">
+      <element id="file-copy" path="$PROJECT_DIR$/dadproject-bf6ed-firebase-adminsdk-vanjj-a923d8ebf1.json" />
+      <element id="archive" name="untitled.jar">
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+        </element>
+        <element id="library" level="project" name="com.google.firebase:firebase-admin:5.8.0" />
+        <element id="library" level="project" name="org.mongodb:mongodb-driver:3.6.1" />
+        <element id="library" level="project" name="com.jfoenix:jfoenix:8.0.1" />
+        <element id="module-output" name="untitled" />
+      </element>
+    </root>
+  </artifact>
+</component>
