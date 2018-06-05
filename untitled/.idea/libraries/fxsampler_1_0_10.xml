@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="fxsampler-1.0.10">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../fxsampler-1.0.10.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../controlsfx-8.40.14.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

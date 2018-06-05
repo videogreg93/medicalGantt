@@ -16,6 +16,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by gregory on 1/26/18.
@@ -69,6 +70,36 @@ public class DatabaseManager {
                 Collections.sort(doctorNames);
                 comboBox.getItems().addAll(doctorNames);
                 comboBox.setDisable(false);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public static void setupUrgenceLoader(GanttChart ganttChart) {
+        urgenceRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Urgence urgence = Urgence.createFromMap((Map<String, Object>)dataSnapshot.getValue());
+                ganttChart.addUrgence(urgence);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
             }
 
             @Override

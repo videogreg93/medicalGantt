@@ -3,20 +3,26 @@ package sample;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
-import com.sun.tools.javac.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Border;
 import javafx.scene.text.Text;
+import net.jonathangiles.hacking.tableview.cellSpan.CellSpan;
+import net.jonathangiles.hacking.tableview.cellSpan.CellSpanTableView;
+import net.jonathangiles.hacking.tableview.cellSpan.SpanModel;
 import org.bson.Document;
+import org.controlsfx.control.spreadsheet.GridBase;
+import org.controlsfx.control.spreadsheet.SpreadsheetCell;
+import org.controlsfx.control.spreadsheet.SpreadsheetCellType;
+import org.controlsfx.control.spreadsheet.SpreadsheetView;
 import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
 import javax.crypto.Cipher;
@@ -44,6 +50,7 @@ public class Controller {
     @FXML
     public JFXDatePicker datePicker;
     public TextField numDossier; // numéro de dossier du patient
+    public GanttChart ganttChart;
     @FXML
     private JFXTimePicker arrivalTime; // Heure d'arrivé
     @FXML
@@ -73,6 +80,11 @@ public class Controller {
         doctorCombobox.valueProperty().addListener((ov, t, t1) -> {
             labelSpecialty.setText(Controller.doctors.get(ov.getValue()));
         });
+
+        // setup ganttChart
+
+
+
     }
 
 
