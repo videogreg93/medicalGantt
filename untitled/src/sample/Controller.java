@@ -3,6 +3,8 @@ package sample;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,6 +21,7 @@ import net.jonathangiles.hacking.tableview.cellSpan.CellSpan;
 import net.jonathangiles.hacking.tableview.cellSpan.CellSpanTableView;
 import net.jonathangiles.hacking.tableview.cellSpan.SpanModel;
 import org.bson.Document;
+import org.controlsfx.control.Notifications;
 import org.controlsfx.control.spreadsheet.GridBase;
 import org.controlsfx.control.spreadsheet.SpreadsheetCell;
 import org.controlsfx.control.spreadsheet.SpreadsheetCellType;
@@ -61,6 +64,8 @@ public class Controller {
     public Label detailsTempsDeLatence;
     public Label detailsDuree;
     public Button detailsDeleteButton;
+    public TextField autreTextField;
+    public Label     labelAutre;
     @FXML
     private JFXTimePicker arrivalTime; // Heure d'arrivé
     @FXML
@@ -90,6 +95,13 @@ public class Controller {
         doctorCombobox.valueProperty().addListener((ov, t, t1) -> {
             labelSpecialty.setText(Controller.doctors.get(ov.getValue()));
         });
+        operationCombobox.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                    autreTextField.setDisable(!newValue.equalsIgnoreCase("Autre"));
+                    labelAutre.setDisable(!newValue.equalsIgnoreCase("Autre"));
+            }
+        });
 
         // setup ganttChart
         ganttChart.setController(this);
@@ -104,6 +116,10 @@ public class Controller {
         if (!isValidSubmission()) {
             return;
         }
+        // Get operation type
+        String operationType = operationCombobox.getSelectionModel().getSelectedItem();
+        if (!autreTextField.isDisabled())
+            operationType = autreTextField.getText();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d, yyyy");
         Document arrivalDate = new Document("day", datePicker.getValue().getDayOfMonth())
                 .append("month", datePicker.getValue().getMonthValue())
@@ -111,7 +127,7 @@ public class Controller {
         Document doc = new Document("Arrival Time", arrivalTime.getValue())
                 .append("Time to begin Operation", operationField.getText())
                 .append("Duration", DureeOperation.getText())
-                .append("Operation Type", operationCombobox.getSelectionModel().getSelectedItem())
+                .append("Operation Type", operationType)
                 .append("Doctor Name", doctorCombobox.getSelectionModel().getSelectedItem())
                 .append("Arrival Date", arrivalDate)
                 .append("Dossier", (encrypt(numDossier.getText()))); // TODO this will be encrypted
@@ -132,11 +148,27 @@ public class Controller {
 
     private void showValidationMessage() {
         // Show Validation Message
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        /*Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Envoyé");
         alert.setHeaderText(null);
         alert.setContentText("Urgence bien envoyée!");
-        alert.showAndWait();
+        alert.showAndWait();*/
+        Notifications.create()
+                .title("Envoyé")
+                .text("Urgence bien envoyée!")
+                .showInformation();
+    }
+
+    private void showDeletedMessage() {
+        /*Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Supprimer");
+        alert.setHeaderText(null);
+        alert.setContentText("Urgence bien supprimée!");
+        alert.showAndWait();*/
+        Notifications.create()
+                .title("Supprimer")
+                .text("Urgence bien supprimée!")
+                .showInformation();
     }
 
 
@@ -146,11 +178,11 @@ public class Controller {
         boolean isValid = true;
         String errorMessage = "";
         // Patient Dossier number
-        Pattern p = Pattern.compile("[0-9]+");
+        Pattern p = Pattern.compile("[0-9]{6}");
         Matcher m = p.matcher(numDossier.getText());
         if (!m.find()) {
             isValid = false;
-            errorMessage += "Le numéro de dossier doit être un nombre\n";
+            errorMessage += "Le numéro de dossier doit être un nombre composé de 6 chiffres\n";
         }
         // Date picker
         p = Pattern.compile("\\d{4}-\\d{2}-\\d{2}");
@@ -176,9 +208,10 @@ public class Controller {
             isValid = false;
             errorMessage += "La durée de opération n'es pas valide\n";
         }
-        if (operationCombobox.getSelectionModel().isEmpty()) {
+        if (operationCombobox.getSelectionModel().isEmpty() ||
+                (!autreTextField.isDisabled() && autreTextField.getText().isEmpty())) {
             isValid = false;
-            errorMessage += "Veuillez choisir un type d'opération.\n";
+            errorMessage += "Veuillez choisir une type d'opération.\n";
         }
         if (doctorCombobox.getSelectionModel().isEmpty()) {
             isValid = false;
@@ -220,6 +253,7 @@ public class Controller {
         System.out.println("remove" + urgence);
         DatabaseManager.removeUrgence(urgence);
         clearDetailsView();
+        showDeletedMessage();
     }
 
     private void clearDetailsView() {

@@ -87,7 +87,7 @@ public class GanttChart extends SpreadsheetView {
     private void initChart() {
         // Hide the headers
         setShowColumnHeader(false);
-
+        urgenceCellPositions.clear();
 
         GridBase grid = new GridBase(rowCount,columnCount);
         ObservableList<ObservableList<SpreadsheetCell>> rows = FXCollections.observableArrayList();
@@ -131,6 +131,7 @@ public class GanttChart extends SpreadsheetView {
 
     public void addUrgence(Urgence urgence) {
         allUrgences.add(urgence);
+        initChart();
         updateChart();
     }
 

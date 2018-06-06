@@ -31,7 +31,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         // Setup Stage
         primaryStage.setTitle("Pilote");
-        Scene scene = new Scene(root, 700, 600);
+        Scene scene = new Scene(root, 1000, 900);
         scene.getStylesheets().add("cell.css");
         primaryStage.setScene(scene);
         primaryStage.show();
