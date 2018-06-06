@@ -86,4 +86,27 @@ public class EncryptionHandler {
         return new String(dectyptedText);
     }
 
+    public static String decrypt(String text) {
+        try {
+            if (privateKey == null)
+                fetchPrivateKey();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        byte[] dectyptedText = null;
+        try {
+            // get an RSA cipher object and print the provider
+            final Cipher cipher = Cipher.getInstance(ALGORITHM);
+
+            // decrypt the text using the private key
+            cipher.init(Cipher.DECRYPT_MODE, privateKey);
+            dectyptedText = cipher.doFinal(text.getBytes());
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return new String(dectyptedText);
+    }
+
 }

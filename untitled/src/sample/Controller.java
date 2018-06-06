@@ -24,6 +24,7 @@ import org.controlsfx.control.spreadsheet.SpreadsheetCell;
 import org.controlsfx.control.spreadsheet.SpreadsheetCellType;
 import org.controlsfx.control.spreadsheet.SpreadsheetView;
 import org.omg.Messaging.SYNC_WITH_TRANSPORT;
+import sample.Utils.CellPosition;
 
 import javax.crypto.Cipher;
 import java.io.*;
@@ -35,6 +36,7 @@ import java.security.PublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,6 +53,14 @@ public class Controller {
     public JFXDatePicker datePicker;
     public TextField numDossier; // numéro de dossier du patient
     public GanttChart ganttChart;
+    public Label detailsDossier;
+    public Label detailsMedecin;
+    public Label detailsChirurgie;
+    public Label detailsHeure;
+    public Label detailsDate;
+    public Label detailsTempsDeLatence;
+    public Label detailsDuree;
+    public Button detailsDeleteButton;
     @FXML
     private JFXTimePicker arrivalTime; // Heure d'arrivé
     @FXML
@@ -82,6 +92,7 @@ public class Controller {
         });
 
         // setup ganttChart
+        ganttChart.setController(this);
 
 
 
@@ -185,7 +196,39 @@ public class Controller {
     }
 
 
+    public void updateDetailsPane(Urgence urgence) {
+        if (urgence == null) {
+            // clear values
+            clearDetailsView();
+            return;
+        }
+
+        //detailsDossier.setText(urgence.getDossier());
+        detailsMedecin.setText(urgence.getDoctorName());
+        detailsChirurgie.setText(urgence.getOperationType());
+        detailsHeure.setText(urgence.getPrettyTime());
+        detailsDate.setText(urgence.getPrettyDate());
+        detailsTempsDeLatence.setText(String.valueOf(urgence.getTimeToBeginOperation()) + "h");
+        detailsDuree.setText(String.valueOf(urgence.getDuration()) + "h");
+        detailsDeleteButton.setDisable(false);
+    }
 
 
 
+    public void handleDeleteButton(ActionEvent actionEvent) {
+        Urgence urgence = ganttChart.selectedUrgence;
+        System.out.println("remove" + urgence);
+        DatabaseManager.removeUrgence(urgence);
+        clearDetailsView();
+    }
+
+    private void clearDetailsView() {
+        detailsMedecin.setText("");
+        detailsChirurgie.setText("");
+        detailsHeure.setText("");
+        detailsDate.setText("");
+        detailsTempsDeLatence.setText("");
+        detailsDuree.setText("");
+        detailsDeleteButton.setDisable(true);
+    }
 }

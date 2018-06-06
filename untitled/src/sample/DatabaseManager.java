@@ -94,7 +94,7 @@ public class DatabaseManager {
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-
+                ganttChart.removeUrgence(Urgence.createFromMap((Map<String, Object>)dataSnapshot.getValue()));
             }
 
             @Override
@@ -107,5 +107,38 @@ public class DatabaseManager {
 
             }
         });
+    }
+
+    public static void removeUrgence(Urgence urgence) {
+        ChildEventListener childEventListener = null;
+        ChildEventListener finalChildEventListener = childEventListener;
+        childEventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                urgenceRef.child(dataSnapshot.getKey()).setValueAsync(null);
+                urgenceRef.orderByChild("Dossier").equalTo(urgence.getDossier()).removeEventListener(finalChildEventListener);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        urgenceRef.orderByChild("Dossier").equalTo(urgence.getDossier()).addChildEventListener(childEventListener);
     }
 }
