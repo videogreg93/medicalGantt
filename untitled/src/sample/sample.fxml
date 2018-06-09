@@ -17,7 +17,7 @@
 <?import org.controlsfx.control.spreadsheet.SpreadsheetView?>
 
 <?import sample.GanttChart?>
-<SplitPane dividerPositions="0.45" minWidth="-Infinity" orientation="VERTICAL" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<SplitPane dividerPositions="0.45" minWidth="-Infinity" orientation="VERTICAL" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <GanttChart fx:id="ganttChart" />
    <SplitPane dividerPositions="0.5" prefWidth="717.0">
       <items>
@@ -42,13 +42,14 @@
                           <Label text="Chirurgie planifiée:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
       
                           <ComboBox fx:id="operationCombobox" prefHeight="27.0" prefWidth="144.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <Label fx:id="labelAutre" alignment="TOP_CENTER" contentDisplay="CENTER" disable="true" prefHeight="27.0" prefWidth="32.0" text="Autre:" GridPane.rowIndex="7" />
+            <Label fx:id="labelAutre" alignment="CENTER" contentDisplay="CENTER" disable="true" text="Autre:" GridPane.rowIndex="7" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+            <TextField fx:id="autreTextField" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="7" />
       
-                          <Label alignment="TOP_CENTER" prefHeight="29.0" prefWidth="49.0" text="Médecin:" GridPane.rowIndex="8" />
+                          <Label alignment="TOP_CENTER" contentDisplay="CENTER" text="Médecin:" GridPane.rowIndex="8" />
       
                           <ComboBox fx:id="doctorCombobox" disable="true" prefHeight="27.0" prefWidth="142.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
       
-                          <Label alignment="TOP_CENTER" prefHeight="23.0" prefWidth="54.0" text="Spécialité:" GridPane.rowIndex="9" />
+                          <Label alignment="TOP_CENTER" text="Spécialité:" GridPane.rowIndex="9" GridPane.vgrow="ALWAYS" />
       
                           <Label fx:id="labelSpecialty" text="" GridPane.columnIndex="1" GridPane.rowIndex="9" />
       
@@ -57,7 +58,6 @@
                           <HBox alignment="bottom_center" spacing="10" GridPane.columnSpan="2" GridPane.rowIndex="13">
                   <Button onAction="#handleSubmitButtonAction" text="Soumettre l'urgence" />
               </HBox>
-            <TextField fx:id="autreTextField" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="7" />
               <columnConstraints>
                   <ColumnConstraints />
                   <ColumnConstraints />

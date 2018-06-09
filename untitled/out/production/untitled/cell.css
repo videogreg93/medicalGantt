@@ -1,0 +1,23 @@
+.spreadsheet-cell.color0{
+     -fx-background-color: #79B799;
+     -fx-background-insets: 0, 0 1 1 0;
+     -fx-alignment: center;
+}
+
+.spreadsheet-cell.color1{
+      -fx-background-color: #A43C16;
+      -fx-background-insets: 0, 0 1 1 0;
+      -fx-alignment: center;
+}
+
+.spreadsheet-cell.color2{
+       -fx-background-color: #ECC52A;
+       -fx-background-insets: 0, 0 1 1 0;
+       -fx-alignment: center;
+}
+
+.spreadsheet-cell.dates{
+       -fx-background-color: #a9a9a9;
+       -fx-background-insets: 0, 0 1 1 0;
+       -fx-alignment: center;
+}

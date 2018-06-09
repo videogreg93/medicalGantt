@@ -1,53 +1,20 @@
 package sample;
 
 import com.jfoenix.controls.JFXDatePicker;
-import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.Border;
-import javafx.scene.text.Text;
-import net.jonathangiles.hacking.tableview.cellSpan.CellSpan;
-import net.jonathangiles.hacking.tableview.cellSpan.CellSpanTableView;
-import net.jonathangiles.hacking.tableview.cellSpan.SpanModel;
 import org.bson.Document;
 import org.controlsfx.control.Notifications;
-import org.controlsfx.control.spreadsheet.GridBase;
-import org.controlsfx.control.spreadsheet.SpreadsheetCell;
-import org.controlsfx.control.spreadsheet.SpreadsheetCellType;
-import org.controlsfx.control.spreadsheet.SpreadsheetView;
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
-import sample.Utils.CellPosition;
-
-import javax.crypto.Cipher;
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.security.KeyFactory;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.security.spec.PKCS8EncodedKeySpec;
-import java.security.spec.X509EncodedKeySpec;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static sample.EncryptionHandler.decrypt;
 import static sample.EncryptionHandler.encrypt;
 
 public class Controller {
