@@ -4,16 +4,16 @@ import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TablePosition;
 import org.controlsfx.control.spreadsheet.*;
 import sample.Utils.CellPosition;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GanttChart extends SpreadsheetView {
     private int rowCount = 100;
@@ -76,7 +76,7 @@ public class GanttChart extends SpreadsheetView {
         }
         for (int i = 0; i < allUrgences.size(); i++) {
             Urgence u = allUrgences.get(i);
-            int duration = (u.getTimeToBeginOperation() - u.getDuration());
+            int duration = (u.getTimeToBeginOperation());
             getGrid().spanColumn(duration, i+2, getStartingColumn(u) );
         }
 

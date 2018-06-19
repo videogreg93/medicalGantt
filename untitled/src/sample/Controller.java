@@ -65,8 +65,12 @@ public class Controller {
         operationCombobox.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                try {
                     autreTextField.setDisable(!newValue.equalsIgnoreCase("Autre"));
                     labelAutre.setDisable(!newValue.equalsIgnoreCase("Autre"));
+                } catch (Exception e) {
+                   // e.printStackTrace();
+                }
             }
         });
 

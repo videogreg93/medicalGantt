@@ -43,6 +43,7 @@
       
                           <ComboBox fx:id="operationCombobox" prefHeight="27.0" prefWidth="144.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <Label fx:id="labelAutre" alignment="CENTER" contentDisplay="CENTER" disable="true" text="Autre:" GridPane.rowIndex="7" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+            <TextField fx:id="autreTextField" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="7" />
       
                           <Label alignment="TOP_CENTER" contentDisplay="CENTER" text="Médecin:" GridPane.rowIndex="8" />
       
@@ -57,7 +58,6 @@
                           <HBox alignment="bottom_center" spacing="10" GridPane.columnSpan="2" GridPane.rowIndex="13">
                   <Button onAction="#handleSubmitButtonAction" text="Soumettre l'urgence" />
               </HBox>
-            <TextField fx:id="autreTextField" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="7" />
               <columnConstraints>
                   <ColumnConstraints />
                   <ColumnConstraints />
